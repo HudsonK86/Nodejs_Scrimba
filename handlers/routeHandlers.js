@@ -1,5 +1,8 @@
 import { getData } from '../utils/getData.js'
 import { sendResponse } from '../utils/sendResponse.js'
+import { parseJSONBody } from '../utils/parseJSONBody.js'
+//import { sanitizeData } from '../utils/sanitizeData.js'
+import { addNewSighting } from '../utils/addNewSighting.js'
 
 export async function handleGet(res) {
   const data = await getData()
@@ -9,13 +12,11 @@ export async function handleGet(res) {
 
 // handlePost
 
-// parseJSONBody() will collect and parse the incoming JSON
-// santizeData() 
+// parseJSONBody() w
+// santizeData() will collect and parse the incoming JSON
 // addNewSighting() will do the donkey work of adding the data to our dataset
 // sendResponse()
 
-/*
-Challenge:
-  1. Create and export a function called handlePost().
-  2. For now, that function can just log 'POST request received'.
-*/
+export async function handlePost(req, res) {
+  console.log('POST request received')
+}
