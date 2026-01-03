@@ -1,7 +1,7 @@
 import { getData } from '../utils/getData.js'
 import { sendResponse } from '../utils/sendResponse.js'
 import { parseJSONBody } from '../utils/parseJSONBody.js'
-//import { sanitizeData } from '../utils/sanitizeData.js'
+import { sanitizeInput } from '../utils/sanitizeInput.js'
 import { addNewSighting } from '../utils/addNewSighting.js'
 
 export async function handleGet(res) {
@@ -10,13 +10,15 @@ export async function handleGet(res) {
   sendResponse(res, 200, 'application/json', content)
 }  
 
-// handlePost
-
-// parseJSONBody() w
-// santizeData() will collect and parse the incoming JSON
-// addNewSighting() will do the donkey work of adding the data to our dataset
-// sendResponse()
 
 export async function handlePost(req, res) {
-  console.log('POST request received')
+  
+  try {
+    const parsedBody = await parseJSONBody(req)
+    const sanitizedInput = await sanitizeInput(parsedBody)
+    await addNewSighting(sanitizedInput)
+    sendResponse(res, 201, 'application/json', JSON.stringify({ success: true, status: 201 }))
+  } catch (err) {
+    sendResponse(res, 400, 'application/json', JSON.stringify({ error: err.message, status: 400 }))
+  }
 }
